@@ -19,9 +19,6 @@ var DevicesDAO = function (db) {
         devices.findOne({_id: device_id}, callback);
     };*/
 
-
-
-
     this.getDevices = function (callback) {
         var query  = {};
         var select = {};
