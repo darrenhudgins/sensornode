@@ -26,5 +26,5 @@ running the following command from the root directory of the project.
 
 	$ ./bin/www
 
-If everything is running correctly, you should be able to see the site by
+If everything is running correctly, you should be able to see the website by
 visiting [http://localhost:3002](http://localhost:3002) in your web browser.
