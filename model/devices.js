@@ -1,6 +1,6 @@
 "use strict";
 
-var moment = require("moment");
+//var moment = require("moment");
 
 var DevicesDAO = function (db) {
 
@@ -15,9 +15,11 @@ var DevicesDAO = function (db) {
 
     var devices = db.collection("devices");
 
-    this.getDevice = function (device_id, callback) {
+    /*this.getDevice = function (device_id, callback) {
         devices.findOne({_id: device_id}, callback);
-    };
+    };*/
+
+
 
 
     this.getDevices = function (callback) {
