@@ -1,0 +1,38 @@
+extends layout-logged-in
+
+block content
+
+  section.section-dashboard
+
+    if user.active === false
+      p.not-active-message
+        | Your account has not been activated. You can enter your predictions, but scores will be unavailable
+        |  until the $15 entry fee has been paid.
+
+    else
+      h2 Overall Scores
+
+      table.team-standings(cellspacing="0", cellpadding="0")
+
+        thead
+          th.team-rank Rank
+          th.team-name Player
+          th.team-score Score
+
+        tbody
+
+          each team in teams
+            tr
+              td.team-rank
+
+                if (team.rank)
+                  span.team-rank-container(class="rank-" + team.rank)= team.rank
+                else
+                  != "&nbsp;"
+
+              td.team-name
+                strong= team.teamName
+                br
+                small= team
+
+              td.team-score= team.score

@@ -1,0 +1,93 @@
+extends layout-logged-in
+
+block content
+
+  section.section-event
+
+    div.schedule-list-item(class=event.class)
+      p.team(class=event.away_class)
+        small.team-city=event.away_team.city
+        br
+        strong.team-name=event.away_team.name
+        span.score=event.away_score
+
+      span.separator &mdash;
+
+      p.team(class=event.home_class)
+        small.team-city=event.home_team.city
+        br
+        strong.team-name=event.home_team.name
+        span.score=event.home_score
+
+      div.datetime
+        small.date= event.date
+        br
+        span.time= event.time
+
+      div.pick-spread
+        p= event.away_team.name + ": " + event.away_percent
+        p= event.home_team.name + ": " + event.home_percent
+
+    div.event-picks-container
+      h3= event.away_team.name + " Picks"
+
+      table.event-picks-table(cellspacing="0", cellpadding="0")
+        thead
+          tr
+            th.team-info Player
+            th.team-pd SD
+
+        tbody
+          if event.away_picks.length
+
+            each player in event.away_picks
+              tr(class=player.point_difference === event.real_difference ? "correct-difference-row" : "")
+                td.team-info
+                  strong.team-name= player.teamName
+                  br
+                  small.player-name= player.firstName + " " + player.lastName.charAt(0) + "."
+                td.team-pd= player.point_difference || "N/A"
+                  if player.point_difference === event.real_difference
+                    br
+                    span.correct-difference +2
+          else
+            tr
+              td.team-info(colspan="2")
+                ="Poor " + event.away_team.name
+                |, no one picked them.
+
+
+    div.event-picks-container
+      h3= event.home_team.name + " Picks"
+
+      table.event-picks-table(cellspacing="0", cellpadding="0")
+        thead
+          tr
+            th.team-info Player
+            th.team-pd SD
+
+        tbody
+          if event.home_picks.length
+
+            each player in event.home_picks
+              tr(class=player.point_difference === event.real_difference ? "correct-difference-row" : "")
+                td.team-info
+                  strong.team-name= player.teamName
+                  br
+                  small.player-name= player.firstName + " " + player.lastName.charAt(0) + "."
+                td.team-pd= player.point_difference|| "N/A"
+                  if player.point_difference === event.real_difference
+                    br
+                    span.correct-difference +2
+
+          else
+            tr
+              td.team-info(colspan="2")
+                ="Poor " + event.home_team.name
+                |, no one picked them.
+
+    if user.admin && event.no_picks
+
+      div.event-no-picks
+        h3 Users That Have Not Picked
+        p= event.no_picks.join(", ")

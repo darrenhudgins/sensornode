@@ -1,0 +1,44 @@
+doctype html
+html
+
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    title= title
+    meta(name="description", content="Sensor Node")
+    meta(name="viewport", content="width=device-width, initial-scale=1, user-scalable=no")
+    link(rel="icon", type="image/png", href="/favicon.png")
+    link(rel="stylesheet", href="/stylesheets/style.css")
+    script(src="/js/lib/modernizr.min.js")
+
+  body
+
+    div.wrapper
+      header
+        h1= title
+        nav
+          ul
+            if user.admin
+              li: a(href="/admin") Admin
+            li: a(href="/device") Devices
+            li: a(href="/account") Account
+            li: a(href="/logout") Sign out
+
+      main
+        block content
+
+      div.push
+
+    footer
+      p
+        |Sensor Node<br />
+        a(href="/terms") Terms of Use
+        |&nbsp;|&nbsp;
+        a(href="/privacy") Privacy
+        |&nbsp;|&nbsp;
+        a(href="/account") Account
+        |&nbsp;|&nbsp;
+        a(href="/logout") Sign out
+
+    script(src="/js/lib/jquery-1.11.1.min.js")
+    script(src="/js/main.js")

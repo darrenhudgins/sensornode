@@ -1,0 +1,25 @@
+extends layout-logged-in
+
+block content
+
+  section.section-account-details
+
+    table.account-table(cellspacing="0", cellpadding="0")
+      tbody
+        tr
+          th Name:
+          td= user.firstName + " " + user.lastName
+
+        //tr#teamNameRow
+          th: a#editTeamLink(href="#edit-team", class="edit-team-link") Team:
+          td
+            form(action="", method="POST")
+              span.team-name= user.teamName
+              input#teamName.team-name-input(name="teamName", maxlength="45", placeholder="Team name", type="text", value=user.teamName)
+              button(type="submit") OK
+
+        tr
+          th Email:
+          td= user.email
+
+    p.change-password-link: a(href="/password") Change password

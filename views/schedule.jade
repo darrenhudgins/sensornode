@@ -1,0 +1,184 @@
+extends layout-logged-in
+
+block content
+
+  section.section-schedule
+
+    h2.schedule-week-heading
+      select#weekSelect(name="week-select")
+
+        each week, i in weeks
+
+          if week._id === currentWeek._id
+            option(value="/schedule/week/" + week._id, selected="selected")= week.name
+          else
+            option(value="/schedule/week/" + week._id)= week.name
+
+      if prevWeek
+        a.prev-week-link(href="/schedule/week/" + prevWeek._id)
+            |&laquo;&nbsp;
+            if currentWeek.current_week
+              |Last Week
+            else if prevWeek.current_week
+                |This Week
+            else
+              =prevWeek.name
+
+      if nextWeek
+        a.next-week-link(href="/schedule/week/" + nextWeek._id)
+            if currentWeek.current_week
+                |Next Week
+            else if nextWeek.current_week
+              |This Week
+            else
+              =nextWeek.name
+            |&nbsp;&raquo;
+
+    if user.active === false
+      p.not-active-message
+        | Your account has not been activated. You can enter your predictions, but scores will be unavailable
+        |  until the $15 entry fee has been paid.
+
+    else if teams && teams.length && teams[0].score > 0
+      h3 Weekly Leaderboard
+
+      table.team-standings(cellspacing="0", cellpadding="0")
+        thead
+          tr
+            th.team-rank Rank
+            th.team-name Player
+            th.team-score Score
+
+        tbody
+
+          - var current_rank = 0
+          each team in teams
+
+            - current_rank = team.rank ? team.rank : current_rank
+            if (current_rank <= 3 && team.score > 0) || team._id.equals(user._id)
+
+              tr
+                td.team-rank
+
+                  if (team.rank)
+                    span.team-rank-container(class="rank-" + team.rank)= team.rank
+                  else if (team._id.equals(user._id) && current_rank > 3 && !team.rank)
+                    span.team-rank-container(class="rank-" + current_rank)= current_rank
+                  else
+                    != "&nbsp;"
+
+                td.team-name
+                  strong= team.teamName
+                  br
+                  small= team
+
+                td.team-score= team.score
+
+      if user.admin || (recap && recap.active)
+        h3 Weekly Recap
+
+        div.weekly-recap
+
+          if user.admin
+            div.weekly-recap-edit.hide
+              input#recapWeek(type="hidden", name="recapWeek", value=currentWeek._id)
+
+              p: textarea(name="recap")= recap ? recap.recap : ""
+
+              p
+                if recap && recap.active
+                  input(id="recapActive", type="checkbox" name="recapActive", checked="checked")
+                else
+                  input(id="recapActive", type="checkbox" name="recapActive")
+
+                | &nbsp;
+                label(for="recapActive") Active
+
+              p.save-recap
+                a#cancelEditRecap(href="#cancelEditRecap") Cancel
+                a#saveRecap(href="#saveRecap") Save
+
+          if user.admin || recap.active
+            div.weekly-recap-content
+              != recapHtml
+
+              if user.admin
+                p.edit-recap: a#editRecap(href="#editRecap") Edit
+
+      h3= currentWeek.name + " Schedule"
+
+    if !schedule.length
+      p.no-data-message
+        | This week's schedule is not yet available.
+        br
+        a(href="/schedule") Click here
+        |  to view the current week.
+
+    else
+      ul.schedule-list
+
+        each event, i in schedule
+
+          if event.disabled || !currentWeek.current_week
+            li.schedule-list-item.disabled(class=event.class)
+
+              span.team(class=event.away_class)
+                small.team-city= event.away_team.city
+                br
+                strong.team-name= event.away_team.name
+                span.score= event.away_score
+
+              span.separator &mdash;
+
+              span.team(class=event.home_class)
+                small.team-city= event.home_team.city
+                br
+                strong.team-name= event.home_team.name
+                span.score= event.home_score
+
+              div.point-difference(class=event.user_predicted_class)
+                if event.real_difference > 0 || user.admin
+                  a.view-details-link(href="/event/" + event._id) View details
+                span.point-difference-label Score difference:&nbsp;
+                strong.point-difference-value= event.user_difference || "N/A"
+                if event.user_predicted_difference
+                  span &nbsp;(+2 points!)
+
+              div.datetime
+                small.date= event.date
+                br
+                span.time= event.time + " EST"
+
+              div.pick-spread
+                p= event.away_team.name + ": " + event.away_percent
+                p= event.home_team.name + ": " + event.home_percent
+
+          else
+            li.schedule-list-item(class=event.class)
+
+              a.team(class=event.away_class, href="#away", data-team="away", data-event=event.event_id)
+                small.team-city= event.away_team.city
+                br
+                strong.team-name= event.away_team.name
+
+              span.separator at
+
+              a.team(class=event.home_class, href="#home", data-team="home", data-event=event.event_id)
+                small.team-city= event.home_team.city
+                br
+                strong.team-name= event.home_team.name
+
+              div.point-difference
+                if user.admin
+                  a.view-details-link(href="/event/" + event._id) View details
+                span.point-difference-label Score difference
+                input.point-difference-input(data-event=event.event_id, size="2", maxlength="3", min="1", type="number", data-value=event.user_difference, value=event.user_difference)
+
+              div.datetime
+                small.date= event.date
+                br
+                span.time= event.time + " EST"
+
+              div.pick-spread
+                p= event.away_team.name + ": " + event.away_percent
+                p= event.home_team.name + ": " + event.home_percent

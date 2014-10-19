@@ -1,0 +1,61 @@
+.section-dashboard
+    padding: 15px
+
+    h2
+        margin-left: auto
+        margin-right: auto
+        margin-top: 0
+        max-width: 590px
+        text-align: center
+
+    .not-active-message
+        margin: 0 auto
+
+.team-standings
+    margin: 15px auto
+    max-width: 590px
+    width: 100%
+
+    th, td
+        border-bottom: 1px solid #DDD
+        padding: 5px
+        text-align: left
+        vertical-align: middle
+
+    th
+        border-bottom: 1px solid #999
+
+    .team-rank,
+    .team-score
+        text-align: center
+
+    tr.last td,
+    tr:last-child td
+        border-bottom: none
+
+.team-rank-container
+    border-radius: 17px
+    display: inline-block
+    font-size: 20px
+    font-weight: bold
+    height: 30px
+    line-height: 30px
+    text-align: center
+    width: 30px
+
+    &.rank-1, &.rank-2, &.rank-3
+        border: 2px solid white
+        box-shadow: 1px 1px 5px 0 #CCC
+        color: #FFF
+
+    &.rank-1
+        background: #F2AB3F
+        background: linear-gradient(top, #FFD700, #F2AB3F)
+
+    &.rank-2
+        background: #999
+        background: linear-gradient(top, #CCC, #777)
+
+    &.rank-3
+        background: #733910
+        background: linear-gradient(top, #B35919, #733910)

@@ -1,0 +1,30 @@
+extends layout-logged-in
+
+block content
+
+  section.section-device
+
+    h2 Devices
+
+    table.admin-devices-table(cellspacing="0", cellpadding="0")
+      tbody
+
+        each device, i in devices
+
+          tr(id="deviceView_" + device._id, class=i == devices.length - 1 ? "last" : "")
+            td.device-info
+              strong.device-name=device._id
+              br
+              span.device-manufacturer=device.manufacturer
+              br
+              small.device-model=device.model
+            td.edit
+              a.edit-device-link(href="#edit", data-device=""+device._id) edit
+
+          tr.edit-row.hide(id="deviceEdit_" + device._id)
+            td.device-info
+              input(name="manufacturer", placeholder="Manufacturer", type="text", value=device.manufacturer)
+              br
+              input(name="model", placeholder="Model", type="text", value=device.model)
+              br
+            td.edit: a.save-device-link(href="#save", data-device=""+device._id) save

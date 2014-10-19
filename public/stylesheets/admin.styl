@@ -1,0 +1,44 @@
+.section-admin
+    margin: 0 auto
+    max-width: 590px
+    padding: 15px
+
+    table
+        margin: 15px 0
+        width: 100%
+
+        .hide
+            display: none
+
+        .week-row
+            background: #CCC
+
+        tr.last td,
+        tr:last-child td
+            border-bottom: none
+
+        th, td
+            border-bottom: 1px solid #CCC
+            padding: 5px
+            text-align: left
+
+            &.home-score,
+            &.away-score,
+            &.edit
+                text-align: right
+
+        td.date-time
+            font-family: monospace, sans-serif
+            font-size: 13px
+            text-transform: uppercase
+            white-space: nowrap
+
+        @media (max-width: 590px)
+
+            th.date-time,
+            td.date-time
+                display: none
+
+        @media (max-width: 425px)
+            th, td
+                font-size: 12px

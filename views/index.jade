@@ -1,0 +1,47 @@
+extends layout
+
+block content
+
+  div.login-container
+
+    section.section-create-account
+
+      h2 Create an Account
+
+      form#createAccountForm(action="/", method="POST")
+        input(type="hidden", name="newAccount", value="1")
+        p
+            label First name
+            input#caFirstName(name="caFirstName", placeholder="First name", type="text", maxlength="25", value=caFirstName)
+        p 
+            label Last name
+            input#caLastName(name="caLastName", placeholder="Last name", type="text", maxlength="25", value=caLastName)
+        p 
+            label Email
+            input#caEmail(name="caEmail", placeholder="Email", type="email", maxlength="50", value=caEmail)
+        p 
+            label Password
+            input#caPassword(name="caPassword", placeholder="Password", type="password")
+        p 
+          label Confirm password
+          input#caConfirmPassord(name="caConfirmPassword", placeholder="Confirm password", type="password")
+        p: button(type="submit") Create an Account
+
+        if ca_error
+          p.error= ca_error
+
+    section.section-login
+
+      h2 Already Have an Account?
+
+      form#loginForm(action="/", method="POST")
+        p
+          label Email
+          input#email(name="email", placeholder="Email", type="email", value=email)
+        p
+          label Password
+          input#password(name="password", placeholder="Password", type="password")
+        p: button(type="submit") Login
+
+        if login_error
+          p.error= login_error

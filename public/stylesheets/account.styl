@@ -1,0 +1,94 @@
+.section-account-details,
+.section-change-password
+    box-shadow: 1px 1px 5px 0 #CCC
+    margin: 30px auto
+    max-width: 320px
+    padding: 15px
+
+    @media (max-width: 590px)
+        box-shadow: none
+        margin-bottom: 0
+        margin-top: 0
+
+    h2
+        margin-top: 0
+
+    p:last-child
+        margin-bottom: 0
+
+    .change-password-link
+        text-align: center
+
+.section-change-password
+    max-width: 320px
+
+    label
+        display: none
+        line-height: 25px
+
+.account-table
+    margin: 0 0 15px
+    width: 100%
+
+    th,
+    td
+        border-bottom: 1px solid #EEE
+        padding: 5px
+        vertical-align: top
+
+    th
+        text-align: right
+        width: 55px
+
+    td
+        padding-right: 0
+        text-align: left
+
+    .team-name-input
+        display: none
+        width: 80%
+
+    button
+        display: none
+        margin-left: 5px
+        padding-left: 5px
+        padding-right: 5px
+        width: auto
+
+    .edit
+
+        .team-name
+            display: none
+
+        .team-name-input,
+        button
+            display: inline-block
+
+.not-active-message
+    background: #fff9ae
+    color: #dd6b1e
+    font-size: 13px
+    line-height: 17px
+    margin: 0 auto
+    max-width: 515px
+    padding: 15px 15px 15px 60px
+    position: relative
+    text-align: left
+
+    @media (max-width: 590px)
+        margin: 0 15px
+
+    &:before
+        color: #994a15
+        content: "!"
+        display: block
+        font-family: georgia,serif
+        font-size: 48px
+        height: 50px
+        line-height: 50px
+        left: 0
+        margin-top: -25px
+        position: absolute
+        text-align: center
+        top: 50%
+        width: 60px

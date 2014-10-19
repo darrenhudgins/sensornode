@@ -1,0 +1,38 @@
+extends layout-logged-in
+
+block content
+
+  section.section-admin
+
+    h2 Users
+
+    table.admin-users-table(cellspacing="0", cellpadding="0")
+      tbody
+
+        each player, i in users
+
+          tr(id="userView_" + player._id, class=i == users.length - 1 ? "last" : "")
+            td.user-info
+              strong.player-name=player.lastName + ", " + player.firstName
+              br
+              small.player-email=player.email
+            td.edit
+              a.edit-user-link(href="#edit", data-user=""+player._id) edit
+
+          tr.edit-row.hide(id="userEdit_" + player._id)
+            td.user-info
+              input(name="firstName", placeholder="First name", type="text", value=player.firstName)
+              br
+              input(name="lastName", placeholder="Last name", type="text", value=player.lastName)
+              br
+              input(name="email", placeholder="Email", type="email", value=player.email)
+              br
+              input(name="password", placeholder="Password", type="password")
+              br
+              if player.active
+                input(name="active", id="user_" + player._id + "_active", type="checkbox", value="1", checked="checked")
+              else
+                input(name="active", id="user_" + player._id + "_active", type="checkbox", value="1")
+              | &nbsp;
+              label(for="user_" + player._id + "_active") active
+            td.edit: a.save-user-link(href="#save", data-user=""+player._id) save

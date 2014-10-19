@@ -1,0 +1,47 @@
+.section-event
+    margin: 0 auto
+    max-width: 590px
+    padding: 0 5px
+    text-align: center
+
+    @media (max-width: 500px)
+        padding: 0
+
+    .schedule-list-item
+        margin-top: 30px
+
+.event-picks-container
+    box-sizing: border-box
+    display: inline-block
+    padding: 0 5px
+    width: 50%
+
+    @media (max-width: 500px)
+        max-width: 100%
+        width: 100%
+
+.event-picks-table
+    width: 100%
+
+    th, td
+        border-bottom: 1px solid #DDD
+        padding: 5px
+        text-align: left
+
+        &.team-pd
+            text-align: center
+            vertical-align: top
+
+    th
+        border-bottom-color: #999
+
+    tr.correct-difference-row
+        background: #c4f5c5
+
+    tr:last-child td
+        border-bottom: none
+
+    .correct-difference
+        color: #358937
+        font-size: 12px
+        font-weight: bold
