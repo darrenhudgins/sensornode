@@ -32,6 +32,8 @@ var DevicesDAO = function (db) {
         var options = {upsert: true};
         var query   = {_id: device_id};
 
+        //console.log("device lot: " + device.get("lotNumber"));
+
         devices.update(query, device, options, callback);
     };
 };

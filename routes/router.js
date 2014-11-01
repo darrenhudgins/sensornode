@@ -4,6 +4,7 @@ var ScheduleDAO = require("../model/schedule");
 var SessionsDAO = require("../model/sessions");
 var UsersDAO    = require("../model/users");
 var DevicesDAO    = require("../model/devices");
+var ObservationsDAO = require("../model/observations");
 var WeeksDAO    = require("../model/weeks");
 var RecapsDAO   = require("../model/recaps");
 
@@ -72,6 +73,17 @@ var Router = {
             this.devicesDAO = new DevicesDAO(this.app.get("db"));
         }
         return this.devicesDAO;
+    },
+
+    /**
+     * Observations object.
+     */
+    observations: function () {
+
+        if (!this.observationsDAO) {
+            this.observationsDAO = new ObservationsDAO(this.app.get("db"));
+        }
+        return this.observationsDAO;
     },
 
     /**

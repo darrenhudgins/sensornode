@@ -1,0 +1,30 @@
+extends layout-logged-in
+
+block content
+
+  section.section-observation
+
+    h2 Observations
+
+    table.admin-observations-table(cellspacing="0", cellpadding="0")
+      tbody
+
+        each observation, i in observations
+
+          tr(id="observationView_" + observation._id, class=i == observations.length - 1 ? "last" : "")
+            td.observation-info
+              strong.observation-name=observation._id
+              br
+              span.observation-status=observation.status
+              br
+              small.observation-reliability=observation.reliability
+            td.edit
+              a.edit-observation-link(href="#edit", data-observation=""+observation._id) edit
+
+          tr.edit-row.hide(id="observationEdit_" + observation._id)
+            td.observation-info
+              input(name="status", placeholder="Status", type="text", value=observation.status)
+              br
+              input(name="reliability", placeholder="Reliability", type="text", value=observation.reliability)
+              br
+            td.edit: a.save-observation-link(href="#save", data-observation=""+observation._id) save

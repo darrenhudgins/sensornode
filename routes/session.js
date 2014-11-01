@@ -47,7 +47,8 @@ SessionRouter.addUser = function (req, res, next) {
             if (err) return next(err);
 
             res.cookie('session', session_id);
-            return res.redirect('/first-use');
+            return res.redirect("/device");
+
         }.bind(this));
     }.bind(this));
 };
@@ -112,7 +113,7 @@ SessionRouter.isLoggedIn = function (req, res, next) {
 
         // If the user is logged in, redirect to dashboard if on login page
         if (req.url == "/" && req.user_id) {
-            return res.redirect("/schedule");
+            return res.redirect("/device");
 
             // Otherwise, if user is not logged in, redirect to login page
         } else if (!req.user_id && req.url != "/") {
@@ -195,7 +196,7 @@ SessionRouter.validateLogin = function (req, res, next) {
     var email    = req.body.email.toLowerCase();
     var password = req.body.password;
 
-    console.log("user submitted email: " + email + " pass: " + password);
+    //console.log("user submitted email: " + email + " pass: " + password);
 
     this.users().validateLogin(email, password, function (err, user) {
         var login_error;
@@ -229,7 +230,7 @@ SessionRouter.validateLogin = function (req, res, next) {
 
             res.cookie("session", session_id, {expires: expireDate});
 
-            return res.redirect("/schedule");
+            return res.redirect("/device");
         }.bind(this));
     }.bind(this));
 };

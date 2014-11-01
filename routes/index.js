@@ -7,6 +7,8 @@ var DashboardRouter = require("./dashboard");
 var ScheduleRouter  = require("./schedule");
 var SessionRouter   = require("./session");
 var DeviceRouter    = require("./device");
+var ObservationRouter    = require("./observation");
+
 
 module.exports = function (app) {
     var dash  = Object.create(DashboardRouter).init(app);
@@ -14,6 +16,7 @@ module.exports = function (app) {
     var sesh  = Object.create(SessionRouter).init(app);
     var admin = Object.create(AdminRouter).init(app);
     var device = Object.create(DeviceRouter).init(app);
+    var observation = Object.create(ObservationRouter).init(app);
 
     // Retrieve the user info
     router.use(sesh.isLoggedIn.bind(sesh));
@@ -39,6 +42,10 @@ module.exports = function (app) {
     router.get("/device", device.displayDevices.bind(device));
     router.post("/device/save-device", device.saveDeviceChanges.bind(device));
 
+    // Observation
+    router.get("/observation", observation.displayObservations.bind(observation));
+    router.post("/observation/save-observation", observation.saveObservationChanges.bind(observation));
+
     // Schedule
     router.get("/schedule",            sched.displaySchedule.bind(sched));
     router.get("/schedule/week/:week", sched.displaySchedule.bind(sched));
@@ -50,11 +57,6 @@ module.exports = function (app) {
     // Scores
     router.get("/scores", dash.displayDashboard.bind(dash));
 
-    // Rules
-    router.get("/rules", function (req, res) {
-        res.render("rules", {title: app.get("title"), user: req.user, firstUse: false});
-    });
-
     //Terms and Privacy
     router.get("/terms", function (req, res) {
         res.render("terms", {title: app.get("title"), user: req.user, firstUse: false});
@@ -62,11 +64,6 @@ module.exports = function (app) {
 
     router.get("/privacy", function (req, res) {
         res.render("privacy", {title: app.get("title"), user: req.user, firstUse: false});
-    });
-
-    // First-Use
-    router.get("/first-use", function (req, res) {
-        res.render("rules", {title: app.get("title"), user: req.user, firstUse: true});
     });
 
     return router;

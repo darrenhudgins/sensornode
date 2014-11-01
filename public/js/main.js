@@ -114,16 +114,17 @@
         },
 
         saveDevice: function (device_id, $editRow, $viewRow) {
-            console.log("save device");
+
             var data = {
                 device_id: device_id,
                 manufacturer: $editRow.find("input[name=\"manufacturer\"]").val(),
-                model:  $editRow.find("input[name=\"model\"]").val()
+                model:  $editRow.find("input[name=\"model\"]").val(),
+                lotNumber: $editRow.find("input[name=\"lotNumber\"]").val()
             };
 
-            console.log(data.model);
-            console.log(data.manufacturer);
-            console.log(data.device_id);
+            //console.log(data.model);
+            //console.log(data.manufacturer);
+            //console.log(data.lotNumber);
 
             $.post("/device/save-device", data, function (res) {
 
@@ -147,6 +148,46 @@
         }
     };
 
+    var ObservationController = {
+
+        addEventListeners: function () {
+            $(".edit-observation-link, .save-observation-link").on("click", this.toggleEditObservation.bind(this));
+        },
+
+        init: function () {
+            this.addEventListeners();
+            return this;
+        },
+
+        saveObservation: function (observation_id, $editRow, $viewRow) {
+
+            var data = {
+                observation_id: observation_id,
+                status: $editRow.find("input[name=\"status\"]").val(),
+                reliability:  $editRow.find("input[name=\"reliability\"]").val()
+            };
+
+            $.post("/observation/save-observation", data, function (res) {
+
+                if (res.success === true) {
+                    window.location.reload();
+                }
+            });
+        },
+
+        toggleEditObservation: function (e) {
+            var $target  = $(e.target);
+            var observation_id  = $target.data("observation");
+            var $editRow = $("#observationEdit_" + observation_id).toggleClass("hide");
+            var $viewRow = $("#observationView_" + observation_id).toggleClass("hide");
+
+            //e.preventDefault();
+
+            if ($target.is(".save-observation-link")) {
+                this.saveObservation(observation_id, $editRow, $viewRow);
+            }
+        }
+    };
 
     var ScheduleController = {
 
@@ -266,6 +307,7 @@
         var placeholderShim;
         var scheduleController;
         var deviceController;
+        var observationController;
 
         if (!Modernizr.input.placeholder &&
                 $(".section-login, .section-change-password").length) {
@@ -286,8 +328,12 @@
 
         if ($(".section-device").length) {
             deviceController = Object.create(DeviceController).init();
-            console.log("section device")
         }
+
+        if ($(".section-observation").length) {
+            observationController = Object.create(ObservationController).init();
+        }
+
     });
 }(jQuery, Modernizr));
 

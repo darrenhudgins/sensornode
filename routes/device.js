@@ -6,7 +6,7 @@ var Router      = require("./router");
 var DeviceRouter = Object.create(Router);
 
 DeviceRouter.displayDevices = function (req, res, next) {
-    console.log("displayDevices");
+
     //if (!req.user.admin) return res.redirect("/");
 
         this.devices().getDevices(function (err, devices) {
@@ -23,22 +23,27 @@ DeviceRouter.displayDevices = function (req, res, next) {
 };
 
 DeviceRouter.saveDeviceChanges = function (req, res, next) {
-    console.log("saveDeviceChanges");
+
     var device_id   = ObjectID(req.body.device_id);
     var manufacturer = req.body.manufacturer;
     var model = req.body.model;
-    console.log("saveDeviceChanges, model:" + manufacturer);
+    var lotNumber = req.body.lotNumber;
     var update = {
         $set: {
             //_id: device_id,
             manufacturer: manufacturer,
-            model: model
+            model: model,
+            lotNumber: lotNumber
         }
     };
 
-    if (!req.user.admin) {
-        return next(new Error("User is not authorized to perform this action."));
-    }
+    console.log("before lot");
+    console.log(lotNumber.toString());
+    console.log("after lot");
+
+    //if (!req.user.admin) {
+    //    return next(new Error("User is not authorized to perform this action."));
+    //}
 
     this.devices().updateDevice(device_id, update, function (err, num) {
 
